@@ -1,0 +1,26 @@
+version: "3.3"
+
+services:
+  db:
+    image: postgres:12.4
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    env_file:
+      - ./.env
+
+  back:
+    build:
+      dockerfile: Dockerfile
+      context: .
+    restart: always
+    expose:
+      - "8000"
+    volumes:
+      - static_volume:/accounting_pets/vol/web/
+      - ./logs:/accounting_pets/logs
+    env_file:
+      - ./.env
+
+volumes:
+  static_volume:
+  postgres_data:
